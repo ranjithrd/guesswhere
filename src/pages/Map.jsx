@@ -7,6 +7,7 @@ import VectorSource from "ol/source/Vector"
 import XYZ from "ol/source/XYZ"
 import { defaults } from "ol/interaction"
 import { toStringXY } from "ol/coordinate"
+import OSM from "ol/source/OSM"
 
 function coord3857To4326(coord) {
 	const e_value = 2.7182818284
@@ -46,7 +47,7 @@ function coord4326To3857(coord) {
 	return [long3857, lat3857]
 }
 
-function MapWrapper({ handleLatLongZoom, defaultLatLong }) {
+function MapWrapper({ handleLatLongZoom, defaultLatLong, showOverlay }) {
 	// set intial state - used to track references to OpenLayers
 	//  objects for use in hooks, event handlers, etc.
 	const [map, setMap] = useState()
@@ -88,6 +89,22 @@ function MapWrapper({ handleLatLongZoom, defaultLatLong }) {
 						wrapX: true,
 					}),
 				}),
+
+				// ...(showOverlay
+				// 	? [
+				// 			new XYZ({
+				// 				url:
+				// 					// https://services.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/22/4187434/4194303
+				// 					"https://services.arcgisonline.com/arcgis/rest/services/" +
+				// 					"Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+				// 				maxZoom: 15,
+				// 				projection: "EPSG:4326",
+				// 				tileSize: 512, // the tile size supported by the ArcGIS tile service
+				// 				maxResolution: 180 / 512, // Esri's tile grid fits 180 degrees on one 512 px tile
+				// 				wrapX: true,
+				// 			}),
+				// 	  ]
+				// 	: []),
 
 				initalFeaturesLayer,
 			],

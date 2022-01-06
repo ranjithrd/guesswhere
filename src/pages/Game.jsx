@@ -319,6 +319,7 @@ function Game() {
 					<div>
 						<MapWrapper
 							handleLatLongZoom={(p) => setLatLongZoom(p)}
+							showOverlay={true}
 						/>
 						{latLongZoom ? (
 							<div>
