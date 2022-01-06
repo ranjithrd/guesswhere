@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;1,700&display=swap");
+
+* {
+	margin: none;
+	padding: none;
+}
+
+:root {
+	--shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.map-container {
+	width: 100%;
+	height: 500px;
+	box-shadow: var(--shadow);
+}
+
+.inactive {
+	width: 100%;
+	height: 250px;
+	box-shadow: var(--shadow);
+}
+
+button.filled {
+	width: 100%;
+	background-color: darkgreen;
+	color: white;
+	padding: 0.8em;
+	box-shadow: var(--shadow);
+	font-weight: bold;
+}
+
+button.text {
+	font-size: 1em;
+	color: darkgreen;
+	font-weight: lighter;
+}
+
+input {
+	padding: 1em;
+	box-shadow: var(--shadow);
+}
+
+input:focus {
+	border: none;
+}
+
+.huge {
+	font-size: 4em;
+}
+
+.monospace {
+	font-family: monospace;
+}
