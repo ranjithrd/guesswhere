@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "vite build && && echo '/* /index.html  200' > dist/_redirects",
 		"serve": "vite preview"
 	},
 	"bin": "./cli/cli.js",

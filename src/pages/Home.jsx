@@ -37,10 +37,11 @@ function Home() {
 		await GameService.updateGame(randomNumber, {
 			code: randomNumber,
 			expires: "2022-0-0",
-			lastAnswerer: id,
+			// lastAnswerer: id,
 			lastQuestioner: id,
 			players: JSON.stringify([id]),
 			started: false,
+			wouldStart: id,
 		})
 
 		history.push(`/game/${randomNumber}`)

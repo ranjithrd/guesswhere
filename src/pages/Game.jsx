@@ -57,6 +57,7 @@ function Game() {
 			},
 			lastCorrect: null,
 			lastQuestioner: id,
+			wouldStart: null,
 		})
 		setError("Sent the question!")
 	}
@@ -127,9 +128,7 @@ function Game() {
 
 	// not started yet
 	if (!game.started) {
-		const urlparts = import.meta.url.split("//")
-		const urlnextparts = urlparts[1].split("/")
-		const gameUrl = `${urlparts[0]}//${urlnextparts[0]}/game/${params.code}`
+		const gameUrl = window.location.href
 		function copy() {
 			navigator.clipboard.writeText(gameUrl)
 		}
@@ -146,9 +145,16 @@ function Game() {
 					Copy URL
 				</button>
 				<div className="h-4"></div>
+				<div className="text-xs">OR</div>
+				<div className="h-2"></div>
+				<p>Use the code</p>
+				<div className="text-2xl">{params.code}</div>
+				<div className="h-4"></div>
 				<button className="filled" onClick={handleReady}>
 					Start!
 				</button>
+				<div className="h-4"></div>
+				<p>{error}</p>
 			</div>
 		)
 	}
@@ -158,21 +164,22 @@ function Game() {
 	// is there already a question?
 	// if alice asked...
 	if (game.lastLink?.latlong) {
-		if (game.lastAnswerer === id) {
+		if (game.lastQuestioner === id) {
 			// alice
 			if (game.lastCorrect === true) {
 				// bob has got the correction. waiting for him...
 				status = "wait_for_question"
 			} else if (game.lastCorrect === false) {
 				// alice said it's wrong, waiting for bob's answer
-				status = "answer"
+				status = "wait_for_answer"
 			} else {
 				// alice has not corrected
 				if (game.lastLink?.answer) {
 					// alice has got the answer, needs to correct
-					status = "wait_for_correction"
+					status = "correct"
 				} else {
 					// alice hasn't got any answer yet
+					// if ()
 					status = "wait_for_answer"
 				}
 			}
@@ -183,12 +190,12 @@ function Game() {
 				status = "ask"
 			} else if (game.lastCorrect === false) {
 				// alice said the answer is wrong
-				status = "wait_for_answer"
+				status = "answer"
 			} else {
 				// alice hasn't got back yet
 				if (game.lastLink?.answer) {
 					// bob is waiting for correction
-					status = "correct"
+					status = "wait_for_correction"
 				} else {
 					// bob didn't send any answer yet either
 					status = "answer"
@@ -217,6 +224,14 @@ function Game() {
 			status = "wait_for_question"
 		} else {
 			status = "ask"
+		}
+	}
+
+	if (game.wouldStart && !game.lastLink?.latlong && game.started) {
+		if (game.wouldStart === id) {
+			status = "ask"
+		} else {
+			status = "wait_for_question"
 		}
 	}
 
